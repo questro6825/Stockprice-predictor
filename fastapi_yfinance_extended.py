@@ -7,6 +7,7 @@ app = FastAPI(
     title="YFinance Extended Stock Connector API",
     description="Fetches stock and valuation data (EV/EBITDA, shares) using yfinance.",
     version="1.1.0"
+    servers=[{"url": "https://stockprice-predictor.onrender.com"}]
 )
 
 def safe_get(data, key, default=None):
