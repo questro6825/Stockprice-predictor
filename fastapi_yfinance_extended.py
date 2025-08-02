@@ -6,8 +6,8 @@ import yfinance as yf
 app = FastAPI(
     title="YFinance Extended Stock Connector API",
     description="Fetches stock and valuation data (EV/EBITDA, shares) using yfinance.",
-    version="1.1.0"
-    servers=[{"url": "https://stockprice-predictor.onrender.com"}]
+    version="1.1.0",
+    servers=[{"url": "https://stockprice-predictor.onrender.com"}]  # 
 )
 
 def safe_get(data, key, default=None):
@@ -16,7 +16,7 @@ def safe_get(data, key, default=None):
 @app.get("/stock-extended-summary", summary="Get Extended Stock Data", description="Returns key valuation metrics and shares outstanding.")
 def get_extended_stock_data(ticker: str = Query(..., description="Stock ticker symbol (e.g., AAPL, MSFT, M7, ^GSPC)")):
     stock = yf.Ticker(ticker)
-
+    
     try:
         info = stock.info
         shares_outstanding = safe_get(info, "sharesOutstanding")
@@ -31,3 +31,4 @@ def get_extended_stock_data(ticker: str = Query(..., description="Stock ticker s
         return JSONResponse(content=result)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
